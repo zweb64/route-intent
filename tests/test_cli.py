@@ -19,3 +19,12 @@ def test_unknown_argument_exits_nonzero(capsys):
 
     assert excinfo.value.code != 0
     assert "--no-such-option" in capsys.readouterr().err
+
+
+def test_no_arguments_is_a_usage_error(capsys):
+    # SPEC.md §5: usage errors exit 2 and must not look like success.
+    assert main([]) == 2
+
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert "usage: route-intent" in captured.err
