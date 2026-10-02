@@ -1,0 +1,8 @@
+devices:
+  r1: {asn: 65001, loopback: 10.0.0.1}
+  r2: {asn: 65001, loopback: 10.0.0.2}
+  r4: {asn: 65002, loopback: 10.0.0.4}
+routes:
+  - {device: r1, prefix: 192.0.2.0/24, protocol: bgp}
+routes:
+  - {device: r2, prefix: 192.0.2.0/24, protocol: bgp}

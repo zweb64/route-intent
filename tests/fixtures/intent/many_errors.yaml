@@ -1,0 +1,19 @@
+devices:
+  r1: {asn: 0, loopback: 10.0.0.1}
+  r2: {asn: 65001, loopback: 10.0.0.2}
+  r3: {asn: 65001, loopback: 10.0.0.3}
+  r4: {asn: 65002, loopback: 10.0.0.4}
+isis_adjacencies:
+  - devices: [r2, r3]
+  - devices: [r3, r2]
+bgp_sessions:
+  - {device: r2, peer: r4, type: ibgp}
+  - {device: r2, peer: r9, type: ebgp}
+  # r1 exists but is itself invalid, so this reference must not be reported as unknown.
+  - {device: r1, peer: r2, type: ibgp}
+routes:
+  - {device: r2, prefix: 192.0.2.1/24, protocol: bgp}
+  - {device: r2, prefix: 192.0.2.0/24, protocol: rip}
+path_preferences:
+  - {device: r3, prefix: 192.0.2.0/24, exit_via: r3}
+color: blue

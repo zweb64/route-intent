@@ -1,0 +1,5 @@
+devices:
+  r1: {asn: 65001, loopback: 10.0.0.1, asn: 65002}
+  r1: {asn: 65001, loopback: 10.0.0.1}
+isis_adjacencies: []
+isis_adjacencies: []
