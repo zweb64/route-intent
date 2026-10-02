@@ -1,0 +1,4 @@
+devices:
+  r1: {asn: 65001, loopback: 10.0.0.1}
+  r2: {asn: 65001, loopback: 10.0.0.2}
+  r1: {asn: 65002, loopback: 10.0.0.9}

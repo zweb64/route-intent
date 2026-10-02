@@ -1,0 +1,69 @@
+# Intent for the 5-router lab described in SPEC.md §2.
+#
+#   AS 65001: r1, r2, r3 (IS-IS level-2, iBGP on loopbacks, r1 is the route reflector)
+#   AS 65002: r4, dual-homed to r1 and r2, advertises 192.0.2.0/24
+#   AS 65003: r5, attached to r3, advertises 198.51.100.0/24
+
+# Each device is keyed by its name.
+devices:
+  r1:
+    asn: 65001
+    loopback: 10.0.0.1
+  r2:
+    asn: 65001
+    loopback: 10.0.0.2
+  r3:
+    asn: 65001
+    loopback: 10.0.0.3
+  r4:
+    asn: 65002
+    loopback: 10.0.0.4
+  r5:
+    asn: 65003
+    loopback: 10.0.0.5
+
+# IS-IS runs only inside AS 65001. The order of the two names does not matter.
+isis_adjacencies:
+  - devices: [r1, r2]
+  - devices: [r2, r3]
+  - devices: [r1, r3]
+
+# Each session is checked from the device side. Sessions are declared once, from AS 65001.
+bgp_sessions:
+  # iBGP: r1 is the route reflector; r2 and r3 are its clients and do not peer with each other.
+  - device: r1
+    peer: r2
+    type: ibgp
+  - device: r1
+    peer: r3
+    type: ibgp
+
+  # eBGP to AS 65002 (r4 is dual-homed) and AS 65003.
+  - device: r1
+    peer: r4
+    type: ebgp
+    min_prefixes_received: 1
+  - device: r2
+    peer: r4
+    type: ebgp
+    min_prefixes_received: 1
+  - device: r3
+    peer: r5
+    type: ebgp
+    min_prefixes_received: 1
+
+# r3 must have both customer prefixes: 192.0.2.0/24 through iBGP from r1, 198.51.100.0/24 from r5.
+routes:
+  - device: r3
+    prefix: 192.0.2.0/24
+    protocol: bgp
+  - device: r3
+    prefix: 198.51.100.0/24
+    protocol: bgp
+
+# r1 sets a higher local-preference on routes from r4, so r3 must reach 192.0.2.0/24 via r1,
+# not via r2.
+path_preferences:
+  - device: r3
+    prefix: 192.0.2.0/24
+    exit_via: r1

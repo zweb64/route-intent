@@ -1,0 +1,11 @@
+devices:
+  r1: {asn: 65001, loopback: 10.0.0.1}
+  r2: {asn: 65001, loopback: 10.0.0.2}
+  r4: {asn: 65002, loopback: 10.0.0.4}
+isis_adjacencies:
+  - devices: [r1, r1]
+bgp_sessions:
+  - {device: r1, peer: r4, type: ibgp}
+  - {device: r1, peer: r9, type: ebgp}
+routes:
+  - {device: r8, prefix: 192.0.2.0/24, protocol: bgp}

@@ -1,0 +1,25 @@
+devices:
+  r1:
+    asn: 65001
+    loopback: 10.0.0.1
+  r2:
+    asn: 65001
+    loopback: 10.0.0.2
+  r4:
+    asn: 65002
+    loopback: 10.0.0.4
+isis_adjacencies:
+  - devices: [r1, r2]
+bgp_sessions:
+  - {device: r1, peer: r2, type: ibgp}
+  # The same session declared from the other end is allowed.
+  - {device: r2, peer: r1, type: ibgp}
+  - {device: r1, peer: r4, type: ebgp, min_prefixes_received: 1}
+  - {device: r4, peer: r1, type: ebgp, min_prefixes_received: 0}
+routes:
+  - {device: r1, prefix: 192.0.2.0/24, protocol: bgp}
+  - {device: r2, prefix: 192.0.2.0/24, protocol: bgp}
+  - {device: r1, prefix: 10.0.0.2/32, protocol: isis}
+  - {device: r1, prefix: 10.0.0.1/32, protocol: connected}
+path_preferences:
+  - {device: r2, prefix: 192.0.2.0/24, exit_via: r1}

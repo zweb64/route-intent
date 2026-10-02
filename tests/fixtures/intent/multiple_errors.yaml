@@ -1,0 +1,7 @@
+devices:
+  r1: {asn: 65001, loopback: 10.0.0.1, role: core}
+  r2: {asn: 65001, loopback: 10.0.0.2}
+bgp_sessions:
+  - {device: r1, peer: r9, type: ibgp}
+routes:
+  - {device: r2, prefix: 192.0.2.1/24, protocol: bgp}

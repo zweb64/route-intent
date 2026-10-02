@@ -1,0 +1,6 @@
+devices:
+  r1: {asn: 65001, loopback: 10.0.0.1}
+  r2: {asn: 65001, loopback: 10.0.0.2}
+  r4: {asn: 65002, loopback: 10.0.0.4}
+path_preferences:
+  - {device: r2, prefix: 192.0.2.0/24, exit_via: r1, weight: 5}

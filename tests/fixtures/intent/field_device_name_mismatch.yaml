@@ -1,0 +1,2 @@
+devices:
+  r1: {name: r2, asn: 65001, loopback: 10.0.0.1}
