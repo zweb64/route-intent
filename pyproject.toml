@@ -8,7 +8,10 @@ version = "0.1.0"
 description = "Verify that a network's live routing state matches a declared intent."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "pydantic>=2,<3",
+    "PyYAML>=6",
+]
 
 [project.optional-dependencies]
 dev = [
