@@ -2,13 +2,15 @@
 
 Read `SPEC.md` before every task. It defines scope, architecture, behavior contracts, and the quality bar.
 
-## Git workflow (mandatory)
-- Never commit or push to `main`. `main` is protected; only the owner merges.
-- One branch per milestone or fix: `m<N>-<short-name>` (e.g. `m1-intent-models`) or `fix/<short-name>`.
-- Small commits, Conventional Commit messages: `feat:`, `fix:`, `test:`, `docs:`, `ci:`, `chore:`.
-- Before opening a PR: run `ruff check .`, `ruff format --check .`, and `pytest -m "not lab"`; all must pass.
-- Open a PR using the template. Fill in acceptance criteria and paste real test output.
-- Then STOP. Do not start the next milestone until the owner merges.
+## Git (owner only)
+- Do NOT run any git commands: no branch, add, commit, stash, checkout, push,
+  or PR creation. The owner runs all git operations.
+- Work directly in the current working tree on whatever branch is checked out.
+- When the task is complete, stop and provide:
+  1. A list of every file created, modified, or deleted.
+  2. Suggested commit(s): Conventional Commit messages, each with the files it should include.
+  3. A PR title and a PR body filled in from `.github/pull_request_template.md`.
+- Before stopping, run `ruff check .`, `ruff format --check .`, and `pytest`, and paste the real output.
 
 ## Engineering rules
 - Work only on the current milestone. Do not add features outside SPEC.md.
