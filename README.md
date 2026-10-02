@@ -4,8 +4,12 @@
 The operator writes `intent.yaml` describing expected IS-IS adjacencies, BGP sessions, routes, and
 best-path exits; the tool collects live state from FRRouting routers and reports every mismatch.
 
-**Status: in development.** Only `route-intent --version` works so far. See [SPEC.md](SPEC.md) for
-scope, architecture, and milestones.
+**Status: in development.** The intent file format is implemented and validated; the command line
+only supports `route-intent --version` so far. See [SPEC.md](SPEC.md) for scope, architecture, and
+milestones.
+
+- [examples/intent.yaml](examples/intent.yaml): the intent for the lab topology.
+- [docs/design.md](docs/design.md): the intent schema, validation rules, and design decisions.
 
 ## Install for development
 
